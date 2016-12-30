@@ -14,16 +14,26 @@ var Schema = mongoose.Schema;
 // create a schema
 var userSchema = new Schema({
 
-    FIO: { type: String, required: true, unique: true },
-    password: { type: String, required: true, unique: true },
-    email: {type: String, required: true, unique: true},
+    FIO: { type: String, required: true, unique: true, min: 6, max: 30},
+    password: { type: String, required: true, unique: true, min: 32, max:32 },
+    email: {type: String, required: true, unique: true, min: 6, max: 30,
+
+        validate: {
+            validator: function(v) {
+                return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v);
+            },
+            message: '{VALUE} is not a valid email'
+        }
+
+
+    },
 
 
 
     location: {
 
-        lat: {type: String, required: true},
-        lon: {type: String, required: true}
+        lat: {type: Number, required: true},
+        lon: {type: Number, required: true}
 
 
     },
