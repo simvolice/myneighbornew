@@ -18,9 +18,9 @@ var newUser = new User({
 
 
 /* Отдаем домашнию страницу. */
-router.get('/', function(req, res, next) {
+router.get('/testapi', function(req, res, next) {
 
- res.render('index');
+ res.json('start home');
 
 
 
