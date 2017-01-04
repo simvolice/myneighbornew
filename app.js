@@ -22,7 +22,7 @@ var index = require('./routes/index');
 
 
 var app = express();
-
+var admin = express(); // админка будущая
 
 app.use(session({
     secret: '719eef97-afd3-40ac-b235-30b16cd8c978',
