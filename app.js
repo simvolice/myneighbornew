@@ -14,8 +14,7 @@ var MongoStore = require('connect-mongo')(session);
 
 var index = require('./routes/index');
 
-var mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost/myneighbornew");
+
 
 
 
@@ -40,11 +39,20 @@ app.use(session({
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(helmet());
 app.use('/', index);
+
+
+
+
+
+
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

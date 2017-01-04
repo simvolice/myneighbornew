@@ -1,27 +1,29 @@
 var express = require('express');
 var router = express.Router();
 
-var User = require('../api/Users');
+var ServiceUsers = require('../services/Users');
 
 
 
 
 
-
-
-
-/* Отдаем тестовое апи. */
-router.get('/testapi', function(req, res, next) {
+router.get('/testdb', function (req, res, next) {
 
 
 
 
 
- res.json(req.session.id);
+  ServiceUsers.getAllUsers(res);
+
+
 
 
 
 
 });
+
+
+
+
 
 module.exports = router;
