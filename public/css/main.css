@@ -1,0 +1,33 @@
+.header{
+    background: #00BCD4;
+    box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
+
+
+
+}
+
+
+.header > .columns > h4 {
+
+    color: white;
+
+}
+
+
+.header > .columns > * {
+
+    padding-left: 17px;
+    margin-top: 20px;
+
+
+
+}
+
+
+.custom_three_columns {
+
+
+    margin-left: 65px;
+
+
+}

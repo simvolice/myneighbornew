@@ -7,16 +7,13 @@ const co = require('co');
 const url = 'mongodb://localhost:27017/myneighbornew';
 
 
-
-
 module.exports = {
 
 
+    getAllUsers: function (res) {
 
-    getAllUsers: function(res) {
 
-
-       return co(function*() {
+        return co(function*() {
             // Connection URL
             const db = yield MongoClient.connect('mongodb://localhost:27017/myneighbornew');
             console.log("Connected correctly to server");
@@ -26,27 +23,30 @@ module.exports = {
 
 
             // Get first two documents that match the query
-           const docs = yield col.find({}).toArray();
+            const docs = yield col.find({}).toArray();
 
-           db.close();
-
-
-
-           res.json(docs);
+            db.close();
 
 
-        }).catch(function(err) {
+            res.json(docs);
+
+
+        }).catch(function (err) {
             console.log(err.stack);
 
         });
 
 
-
     },
 
-    getOneUser: function() {
+    getOneUser: function (res) {
         return "Test Users";
     }
+
+
+
+
+
 };
 
 
