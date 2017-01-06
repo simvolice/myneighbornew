@@ -1,7 +1,8 @@
 .header{
     background: #00BCD4;
     box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
-
+    z-index: 1;
+    position: relative;
 
 
 }
@@ -31,3 +32,16 @@
 
 
 }
+.custom_row {
+    min-height: 430px;
+
+}
+
+#map {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+}
+
+
