@@ -12,7 +12,7 @@ const url = 'mongodb://localhost:27017/myneighbornew';
 
 module.exports = {
 
-    registration: function (objParams ,res) {
+    registration: function (objParams) {
 
         return co (function*() {
 
@@ -25,14 +25,14 @@ module.exports = {
 
 
 
-           const result = yield col.insertOne({email: objParams.email, password: objParams.password, token: objParams.token});
+           const result = yield col.insertOne({email: objParams.email, password: objParams.password});
 
 
 
             db.close();
 
 
-            res.json(result);
+           return result;
 
 
 
@@ -41,7 +41,7 @@ module.exports = {
 
         }).catch(function (err) {
 
-            console.log(err.stack);
+            return err;
 
 
 
@@ -49,10 +49,46 @@ module.exports = {
 
 
 
+    },
+
+
+
+    login: function (objParams) {
+
+        return co(function*() {
+
+
+            // Connection URL
+            const db = yield MongoClient.connect('mongodb://localhost:27017/myneighbornew');
+            console.log("Connected correctly to server");
+
+            // Get the collection
+            const col = db.collection('users');
+
+
+
+            const result = yield col.findOne({email: objParams.email});
+
+
+
+            db.close();
+
+
+
+
+            return result;
+
+
+
+        }).catch(function (err) {
+
+            return err;
+
+
+        });
+
+
     }
-
-
-
 
 
 };

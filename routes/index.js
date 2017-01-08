@@ -23,7 +23,7 @@ function checkRegisterData(req, res) {
     if (!testEmail.test(req.body.email)){
 
 
-        return res.json("Вы ввели не правильный email");
+        return  res.json({"code": "emailWrong"});
 
 
     } else if (!testPass.test(req.body.pass)) {
@@ -31,26 +31,35 @@ function checkRegisterData(req, res) {
 
 
 
-        return res.json("Вы ввели не правильный пароль");
+        return  res.json({"code": "passWrong"});
 
     } else {
 
         const hash = bcrypt.hashSync(req.body.pass, 10);
 
-        const token = jsonwebtoken.sign(req.body.email, "719eef97-afd3-40ac-b235-30b16cd8c978");
 
         const objParams = {
 
             email: req.body.email,
-            password: hash,
-            token : token
+            password: hash
 
 
         };
 
 
 
-        AuthService.registration(objParams, res);
+        AuthService.registration(objParams).then(function (result) {
+
+
+            res.json(result);
+
+        }, function (err) {
+
+            res.json(err);
+
+        });
+
+
 
 
 
@@ -99,6 +108,60 @@ router.post('/register', function (req, res, next) {
 
 
 router.post('/login', function (req, res, next) {
+
+
+
+
+
+
+    let objParams = {
+
+      email: req.body.email
+
+
+    };
+
+
+
+
+  AuthService.login(objParams).then(function (result) {
+
+      if (result == null) {
+
+          res.json({"code": "emailWrong"});
+
+      }else if (bcrypt.compareSync(req.body.pass, result.password)){
+
+
+
+          res.json({"code": "ok", "token": jsonwebtoken.sign(result, "719eef97-afd3-40ac-b235-30b16cd8c978")});
+
+
+      }else {
+
+
+          res.json({"code": "passWrong"});
+
+
+      }
+
+
+
+
+
+
+  }, function (err) {
+
+
+      res.json(err.stack);
+
+  });
+
+
+
+
+
+
 
 });
 
