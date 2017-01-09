@@ -4,7 +4,7 @@
 const MongoClient = require('mongodb').MongoClient;
 
 const co = require('co');
-const url = 'mongodb://localhost:27017/myneighbornew';
+const url = 'mongodb://194.87.237.153:27017/myneighbornew';
 
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
 
         return co(function*() {
             // Connection URL
-            const db = yield MongoClient.connect('mongodb://localhost:27017/myneighbornew');
+            const db = yield MongoClient.connect(url);
             console.log("Connected correctly to server");
 
             // Get the collection
