@@ -3,49 +3,56 @@
  */
 
 
+function sendDataFromEnter() {
 
+    var valueEmail = document.getElementById("email").value;
+
+    var valuePass = document.getElementById("pass").value;
+
+
+
+
+
+
+
+    var json = JSON.stringify({
+        email: valueEmail,
+        pass: valuePass
+    });
+
+
+    var myHeaders = new Headers();
+
+    myHeaders.append('Content-Type', 'application/json; charset=utf-8');
+
+    var myInit = {
+
+        method: 'POST',
+        headers: myHeaders,
+        body: json,
+        cache: 'default'
+
+    };
+
+    var myRequest = new Request('/login', myInit);
+
+    fetch(myRequest)
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(result) {
+
+            console.log(result);
+
+        });
+
+
+
+}
 
 (function () {
 
-    function sendDataFromEnter() {
 
-        var valueEmail = document.getElementById("email").value;
-
-        var valuePass = document.getElementById("pass").value;
-
-
-        var ObjForForm = {
-
-            email: valueEmail,
-            pass: valuePass
-
-
-        };
-
-        var xhr = new XMLHttpRequest();
-
-
-
-        var json_upload = "globObject=" + JSON.stringify(ObjForForm);
-
-
-
-
-        xhr.open("POST", '/register', true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.send(json_upload);
-
-
-        xhr.onreadystatechange = function () {
-
-               console.log(xhr.responseText)
-
-
-
-        }
-
-
-    }
 
 
     var pressEnter = document.getElementById("pressenter");

@@ -7,6 +7,10 @@ const jsonwebtoken = require('jsonwebtoken');
 const ServiceUsers = require('../services/Users');
 const AuthService = require('../services/Auth');
 
+const testEmail = /^(?=.{3,254}$)(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+const testPass = /^(?=[\x20-\x7E]*?[\w])(?=[\x20-\x7E]*?[\W])(?![\x20-\x7E]*?[\s])[\x20-\x7E]{6,20}$/;
+
 
 
 
@@ -19,16 +23,12 @@ function checkRegisterData(req, res) {
 
 
 
-    const testEmail = /^(?=.{3,254}$)(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    const testPass = /^(?=[\x20-\x7E]*?[\w])(?=[\x20-\x7E]*?[\W])(?![\x20-\x7E]*?[\s])[\x20-\x7E]{6,20}$/;
-
 
 
     if (!testEmail.test(req.body.email)){
 
 
-        return  res.json({"code": "emailWrong"});
+        return  res.json({"code": "emailWrongRegExp"});
 
 
     } else if (!testPass.test(req.body.pass)) {
@@ -36,7 +36,7 @@ function checkRegisterData(req, res) {
 
 
 
-        return  res.json({"code": "passWrong"});
+        return  res.json({"code": "passWrongRegExp"});
 
     } else {
 
@@ -119,53 +119,69 @@ router.post('/login', function (req, res, next) {
 
 
 
-    let objParams = {
-
-      email: req.body.email
 
 
-    };
+    if (!testEmail.test(req.body.email)){
 
 
+        return  res.json({"code": "emailWrongRegExp"});
 
 
-  AuthService.login(objParams).then(function (result) {
+    } else if (!testPass.test(req.body.pass)) {
 
 
+        return  res.json({"code": "passWrongRegExp"});
 
-
-
-      if (result == null) {
-
-          res.json({"code": "emailWrong"});
-
-      }else if (bcrypt.compareSync(req.body.pass, result.password)){
+    } else {
 
 
 
 
-          res.json({"code": "ok", "token": jsonwebtoken.sign(result, "719eef97-afd3-40ac-b235-30b16cd8c978")});
+        let objParams = {
+
+          email: req.body.email
+
+        };
 
 
-      }else {
-
-
-          res.json({"code": "passWrong"});
-
-
-      }
+        AuthService.login(objParams).then(function (result) {
 
 
 
 
 
+            if (bcrypt.compareSync(req.body.pass, result.password)){
 
-  }, function (err) {
 
 
-      res.json(err.stack);
 
-  });
+                res.json({"code": "ok", "token": jsonwebtoken.sign(result, "719eef97-afd3-40ac-b235-30b16cd8c978")});
+
+
+            }else {
+
+
+                res.json({"code": "passWrong"});
+
+
+            }
+
+
+
+
+
+
+        }, function (err) {
+
+
+            res.json(err.stack);
+
+        });
+
+    }
+
+
+
 
 
 
