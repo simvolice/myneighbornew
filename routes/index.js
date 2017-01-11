@@ -14,9 +14,14 @@ const AuthService = require('../services/Auth');
 function checkRegisterData(req, res) {
 
 
+
+
+
+
+
     const testEmail = /^(?=.{3,254}$)(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-    const testPass = /^.*(?=.{8,19}$)(?=.*[a-zA-Z])(?=.*\d)(?=.*[@!#$%&? "]).*$/;
+    const testPass = /^(?=[\x20-\x7E]*?[\w])(?=[\x20-\x7E]*?[\W])(?![\x20-\x7E]*?[\s])[\x20-\x7E]{6,20}$/;
 
 
 
@@ -125,6 +130,10 @@ router.post('/login', function (req, res, next) {
 
 
   AuthService.login(objParams).then(function (result) {
+
+
+
+
 
       if (result == null) {
 
