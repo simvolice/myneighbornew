@@ -3,6 +3,7 @@
     box-shadow: 0 0 4px rgba(0,0,0,.14), 0 4px 8px rgba(0,0,0,.28);
     z-index: 1;
     position: relative;
+    height: 56px;
 
 
 }
@@ -45,7 +46,21 @@
 }
 
 
+.mdl-dialog {
 
+   width: 600px;
+   max-height: 500px;
+
+
+}
+
+.mdl-dialog_content {
+
+    max-width: 800px;
+    max-height: 200px;
+
+
+}
 
 .title_enter {
     margin-left: 75px;

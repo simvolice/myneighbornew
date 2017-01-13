@@ -25,7 +25,7 @@ module.exports = {
 
 
 
-           const result = yield col.insertOne({email: objParams.email, password: objParams.password});
+           const result = yield col.insertOne({email: objParams.email, password: objParams.password, activateEmail: false, activateToken: objParams.activateToken});
 
 
 

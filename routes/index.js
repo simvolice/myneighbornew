@@ -2,16 +2,17 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jsonwebtoken = require('jsonwebtoken');
+const url = require('url');
 
 
-const ServiceUsers = require('../services/Users');
 const AuthService = require('../services/Auth');
 
 const testEmail = /^(?=.{3,254}$)(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const testPass = /^(?=[\x20-\x7E]*?[\w])(?=[\x20-\x7E]*?[\W])(?![\x20-\x7E]*?[\s])[\x20-\x7E]{6,20}$/;
 
-
+const verifEmail = require('../utils/verifEmail');
+const uuidV4 = require('uuid/v4');
 
 
 
@@ -46,7 +47,9 @@ function checkRegisterData(req, res) {
         const objParams = {
 
             email: req.body.email,
-            password: hash
+            password: hash,
+            url: req.hostname,
+            activateToken: uuidV4()
 
 
         };
@@ -94,12 +97,7 @@ function checkRegisterData(req, res) {
 
 
 
-router.post('/logout', function (req, res, next) {
 
-
-
-
-});
 
 
 router.post('/register', function (req, res, next) {
@@ -155,7 +153,7 @@ router.post('/login', function (req, res, next) {
 
 
 
-                res.json({"code": "ok", "token": jsonwebtoken.sign(result, "719eef97-afd3-40ac-b235-30b16cd8c978")});
+                res.json({"code": "ok", "token": jsonwebtoken.sign(result, process.env.SECRETJSONWEBTOKEN)});
 
 
             }else {
@@ -203,17 +201,32 @@ router.post('/myprofile', function (req, res, next) {
 
 });
 
+function fullUrl(req) {
+    return url.format({
+        protocol: req.protocol,
+        hostname: req.hostname,
+        port: process.env.PORT,
+        pathname: "/verifemail",
+        search: "token=" + uuidV4()
+    });
+}
+
+router.get('/testapi', function (req, res, next) {
+
+    const objParams = {
+
+        email: "alkey87@mail.ru",
+
+        url: fullUrl(req)
 
 
-router.get('/testdb', function (req, res, next) {
+    };
 
 
+verifEmail.sendActivateEmail(objParams, res);
 
 
-
-  ServiceUsers.getAllUsers(res);
-
-
+res.json('ok');
 
 
 
@@ -221,6 +234,25 @@ router.get('/testdb', function (req, res, next) {
 });
 
 
+
+
+
+router.get('/verifemail', function (req, res, next) {
+
+
+
+
+
+
+    console.log(req.query.token);
+
+
+    res.json('ok');
+
+
+
+
+});
 
 
 

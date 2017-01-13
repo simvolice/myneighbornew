@@ -92,6 +92,9 @@ function sendDataFromEnter() {
 
 
 
+
+
+
         var coordination = {
 
         latitude:  position.coords.latitude,
@@ -113,6 +116,7 @@ function sendDataFromEnter() {
     function error() {
 
 
+
         dialogError.showModal();
         textErrorElement.innerHTML = "<p>Не удалось получить Ваши координаты.</p>";
         dialogError.querySelector('.close').addEventListener('click', function() {
@@ -125,7 +129,23 @@ function sendDataFromEnter() {
 
 
 
-    navigator.geolocation.getCurrentPosition(success, error);
+
+    if (localStorage.getItem('coordination') == null) {
+
+
+        console.log('save coordinations');
+
+
+
+        navigator.geolocation.getCurrentPosition(success, error);
+
+
+    }
+
+
+
+
+
 
 
 
