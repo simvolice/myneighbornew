@@ -75,6 +75,62 @@ module.exports = {
 
 
 
+            if (result.activateEmail) {
+
+
+                return result;
+
+            }else {
+
+
+                return {"code": "activateEmailError"}
+
+            }
+
+
+
+
+
+
+
+
+
+
+        }).catch(function (err) {
+
+            return err;
+
+
+        });
+
+
+    },
+
+
+    verifEmail: function (token) {
+
+
+        return co(function*() {
+
+
+
+            const db = yield MongoClient.connect(url);
+            console.log("Connected correctly to server");
+
+
+            const col = db.collection('users');
+
+
+
+            const result = yield col.findOneAndUpdate({activateToken: token}, {$set: {activateEmail: true}});
+
+
+
+            db.close();
+
+
+
+
 
             return result;
 
@@ -88,7 +144,10 @@ module.exports = {
         });
 
 
+
+
     }
+
 
 
 };

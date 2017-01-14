@@ -24,11 +24,8 @@ var templates = new EmailTemplates({
 
 module.exports = {
 
-    sendActivateEmail: function (objParams, res) {
+    sendActivateEmail: function (objParams) {
 
-
-
-        console.log(objParams);
 
 
 

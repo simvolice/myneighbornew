@@ -16,6 +16,20 @@ const uuidV4 = require('uuid/v4');
 
 
 
+
+
+function fullUrl(req) {
+    return url.format({
+        protocol: req.protocol,
+        hostname: req.hostname,
+        port: process.env.PORT,
+        pathname: "/verifemail",
+        search: "token=" + uuidV4()
+    });
+}
+
+
+
 function checkRegisterData(req, res) {
 
 
@@ -41,6 +55,9 @@ function checkRegisterData(req, res) {
 
     } else {
 
+
+
+
         const hash = bcrypt.hashSync(req.body.pass, 10);
 
 
@@ -48,12 +65,17 @@ function checkRegisterData(req, res) {
 
             email: req.body.email,
             password: hash,
-            url: req.hostname,
-            activateToken: uuidV4()
+            url: fullUrl(req)
 
 
         };
 
+
+        objParams.activateToken = url.parse(objParams.url, true, true).query.token;
+
+
+
+        verifEmail.sendActivateEmail(objParams);
 
 
         AuthService.registration(objParams).then(function (result) {
@@ -201,29 +223,10 @@ router.post('/myprofile', function (req, res, next) {
 
 });
 
-function fullUrl(req) {
-    return url.format({
-        protocol: req.protocol,
-        hostname: req.hostname,
-        port: process.env.PORT,
-        pathname: "/verifemail",
-        search: "token=" + uuidV4()
-    });
-}
+
 
 router.get('/testapi', function (req, res, next) {
 
-    const objParams = {
-
-        email: "alkey87@mail.ru",
-
-        url: fullUrl(req)
-
-
-    };
-
-
-verifEmail.sendActivateEmail(objParams, res);
 
 
 res.json('ok');
@@ -241,13 +244,23 @@ router.get('/verifemail', function (req, res, next) {
 
 
 
+AuthService.verifEmail(req.query.token).then(function (result) {
 
 
 
-    console.log(req.query.token);
+
+    res.json({"code": result.lastErrorObject.updatedExisting})
 
 
-    res.json('ok');
+}, function (err) {
+
+
+    res.json(err);
+
+});
+
+
+
 
 
 
