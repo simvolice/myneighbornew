@@ -146,7 +146,130 @@ module.exports = {
 
 
 
-    }
+    },
+
+
+
+    resetPassFindUser: function (email) {
+
+        return co(function*() {
+
+
+            // Connection URL
+            const db = yield MongoClient.connect(url);
+            console.log("Connected correctly to server");
+
+            // Get the collection
+            const col = db.collection('users');
+
+
+
+            const result = yield col.findOne({email: email});
+
+
+
+            db.close();
+
+
+                return result;
+
+
+
+        }).catch(function (err) {
+
+            return err;
+
+
+        });
+
+
+
+
+
+    },
+
+
+    setNewPassword: function (objParams) {
+
+
+        return co(function*() {
+
+
+
+            const db = yield MongoClient.connect(url);
+            console.log("Connected correctly to server");
+
+
+            const col = db.collection('users');
+
+
+
+            const result = yield col.findOneAndUpdate({activateToken: objParams.token}, {$set: {password: objParams.pass}});
+
+
+
+            db.close();
+
+
+
+
+
+            return result;
+
+
+
+        }).catch(function (err) {
+
+            return err;
+
+
+        });
+
+
+
+    },
+
+    verifToken: function (token) {
+
+        return co(function*() {
+
+
+            // Connection URL
+            const db = yield MongoClient.connect(url);
+            console.log("Connected correctly to server");
+
+            // Get the collection
+            const col = db.collection('users');
+
+
+
+            const result = yield col.findOne({activateToken: token});
+
+
+
+            db.close();
+
+
+            return result;
+
+
+
+        }).catch(function (err) {
+
+            return err;
+
+
+        });
+
+
+
+
+
+    },
+
+
+
+
 
 
 

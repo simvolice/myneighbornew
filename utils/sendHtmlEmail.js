@@ -24,13 +24,13 @@ var templates = new EmailTemplates({
 
 module.exports = {
 
-    sendActivateEmail: function (objParams) {
+    sendEmail: function (objParams) {
 
 
 
 
 
-        templates.render('activateEmail.html', objParams, function(err, html) {
+        templates.render(objParams.pathToEmailTemplate, objParams, function(err, html) {
 
 
 
@@ -41,9 +41,9 @@ module.exports = {
 
 
             var mailOptions = {
-                from: '<info@efflife.kz>',
+                from: objParams.from,
                 to: objParams.email,
-                subject: 'Активация email',
+                subject: objParams.subject,
 
                 html: html
             };

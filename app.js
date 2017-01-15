@@ -11,9 +11,6 @@ var helmet = require('helmet');
 
 
 
-var index = require('./routes/index');
-
-
 
 
 
@@ -25,6 +22,7 @@ var admin = express(); // админка будущая
 
 
 
+require('./routes')(app);
 
 
 
@@ -35,8 +33,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(helmet());
-app.use('/', index);
-
 
 
 
