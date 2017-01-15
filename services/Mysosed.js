@@ -52,6 +52,59 @@ module.exports = {
 
 
 
+    },
+
+
+
+    searchnearcoord: function (objParams) {
+
+
+
+        return co (function*() {
+
+            // Connection URL
+            const db = yield MongoClient.connect(url);
+            console.log("Connected correctly to server");
+
+            // Get the collection
+            const col = db.collection('users');
+
+
+
+            const result = yield col.find(
+
+                { 'coord':
+                    { $near :
+                        { $geometry:
+                            { type: "Point",  coordinates: [ objParams.coord ] },
+                            $maxDistance: 1000 //Это в метрах
+                        }
+                    }
+                }
+            ).toArray();
+
+
+
+            db.close();
+
+
+            return result;
+
+
+
+
+
+
+        }).catch(function (err) {
+
+            return err;
+
+
+
+        });
+
+
+
     }
 
 
