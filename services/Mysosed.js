@@ -71,6 +71,9 @@ module.exports = {
 
 
 
+
+            //TODO Здесь надо сделать аггрегацию, с полнотекстовым поиском.
+
             const result = yield col.find(
 
                 { 'coord':
