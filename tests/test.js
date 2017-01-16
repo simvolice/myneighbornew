@@ -7,11 +7,10 @@ var chai = require('chai');
 
 var assert = chai.assert;
 var expect = chai.expect;
-chai.should();
+
 
 var chaiHttp = require('chai-http');
 chai.use(chaiHttp);
-var foo = 55;
 
 
 describe('Тестируем testapi', function() {

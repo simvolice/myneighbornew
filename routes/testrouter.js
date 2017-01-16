@@ -5,15 +5,26 @@
 
 const express = require('express');
 const router = express.Router();
-const uuidv4 = require('uuid/v4');
 
-
-router.get('/testapi', function (req, res, next) {
-
+var Mysosed = require('../services/Mysosed');
 
 
 
-    res.json({"code"  :  uuidv4()});
+router.get('/testgeo', function (req, res, next) {
+
+
+
+
+    Mysosed.searchnearcoord(null).then(function (result) {
+
+        res.json({"result": result, "count": result.length});
+
+    }, function (err) {
+
+        res.json(err);
+
+    });
+
 
 
 

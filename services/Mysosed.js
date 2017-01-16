@@ -63,28 +63,68 @@ module.exports = {
         return co (function*() {
 
             // Connection URL
-            const db = yield MongoClient.connect(config.urlToMongoDB);
+            const db = yield MongoClient.connect(config.urlToMongoDBLocalhost);
             console.log("Connected correctly to server");
 
             // Get the collection
-            const col = db.collection('users');
+            const col = db.collection('primer-dataset');
+            const tempCollForCoord = db.collection('tempCollForCoord');
 
 
 
 
             //TODO Здесь надо сделать аггрегацию, с полнотекстовым поиском.
 
-            const result = yield col.find(
+            col.aggregate([
 
-                { 'coord':
-                    { $near :
-                        { $geometry:
-                            { type: "Point",  coordinates: [ objParams.coord ] },
-                            $maxDistance: 1000 //Это в метрах
-                        }
+
+
+                {'$geoNear': {
+                near : { type: "Point", coordinates: [ -73.961704, 40.662942 ] },
+                spherical: true,
+                maxDistance: 1000,
+                distanceField: "dist.calculated"
+            }
+            },
+
+                {
+                    '$out': "tempCollForCoord"
+                }
+
+
+
+
+
+
+
+            ]);
+
+
+
+
+
+
+            tempCollForCoord.createIndex({name : "text" });
+
+            const result = yield tempCollForCoord.aggregate([
+
+
+
+                {'$match': {
+                    '$text': {'$search' : 'Pizza' }
+                }},
+
+                {
+                    '$project': {
+                        '_id': 0, 'name' : 1
                     }
                 }
-            ).toArray();
+
+
+
+                ]).toArray();
+
+
 
 
 

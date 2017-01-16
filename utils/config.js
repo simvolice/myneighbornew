@@ -8,7 +8,9 @@ module.exports = {
 
     port: 3000,
     urlToMongoDB: "mongodb://194.87.237.153:27017/myneighbornew",
-    SECRETJSONWEBTOKEN: "5df9ed11-2bc3-4a2e-a4fc-780c271b25ac"
+    SECRETJSONWEBTOKEN: "5df9ed11-2bc3-4a2e-a4fc-780c271b25ac",
+
+    urlToMongoDBLocalhost: "mongodb://localhost:27017/Desktop"
 
 
 
