@@ -5,7 +5,7 @@
 const MongoClient = require('mongodb').MongoClient;
 
 const co = require('co');
-const url = 'mongodb://194.87.237.153:27017/myneighbornew';
+const config = require('../utils/config');
 
 
 
@@ -20,7 +20,7 @@ module.exports = {
         return co (function*() {
 
             // Connection URL
-            const db = yield MongoClient.connect(url);
+            const db = yield MongoClient.connect(config.urlToMongoDB);
             console.log("Connected correctly to server");
 
             // Get the collection
@@ -63,7 +63,7 @@ module.exports = {
         return co (function*() {
 
             // Connection URL
-            const db = yield MongoClient.connect(url);
+            const db = yield MongoClient.connect(config.urlToMongoDB);
             console.log("Connected correctly to server");
 
             // Get the collection

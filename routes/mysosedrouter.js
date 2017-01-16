@@ -5,6 +5,7 @@
 
 const express = require('express');
 const router = express.Router();
+const config = require('../utils/config');
 
 const MysosedService = require('../services/Mysosed');
 const jsonwebtoken = require('jsonwebtoken');
@@ -16,7 +17,7 @@ router.post('/editmyprofile', function (req, res, next) {
 
     let objParams = {
 
-        id: jsonwebtoken.verify(req.body.token, process.env.SECRETJSONWEBTOKEN)._id
+        id: jsonwebtoken.verify(req.body.token, config.SECRETJSONWEBTOKEN)._id
 
 
     };

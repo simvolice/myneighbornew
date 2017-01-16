@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jsonwebtoken = require('jsonwebtoken');
 const url = require('url');
-
+const config = require('../utils/config');
 
 const AuthService = require('../services/Auth');
 
@@ -178,7 +178,7 @@ router.post('/login', function (req, res, next) {
 
 
 
-                res.json({"code": "ok", "token": jsonwebtoken.sign(result, process.env.SECRETJSONWEBTOKEN)});
+                res.json({"code": "ok", "token": jsonwebtoken.sign(result, config.SECRETJSONWEBTOKEN)});
 
 
             }else {

@@ -5,14 +5,15 @@
 
 const express = require('express');
 const router = express.Router();
-
+const uuidv4 = require('uuid/v4');
 
 
 router.get('/testapi', function (req, res, next) {
 
 
 
-    res.json('ok');
+
+    res.json({"code"  :  uuidv4()});
 
 
 
