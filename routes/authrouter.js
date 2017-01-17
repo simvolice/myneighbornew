@@ -16,8 +16,6 @@ const uuidV4 = require('uuid/v4');
 
 
 
-
-
 function fullUrl(req, pathname, token = uuidV4()) {
     return url.format({
         protocol: req.protocol,
@@ -114,17 +112,28 @@ function checkRegisterData(req, res) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+/**
+ * @api {post} /register Регистрация нового пользователя
+ * @apiGroup Аунтификация
+ * @apiDescription Для регистрации нового пользователя.
+ * @apiParam {String} email Здесь надо передать почтовый ящик.
+ * @apiParam {String} pass Здесь надо передать пароль.
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "code": "OK"
+ *
+ *     }
+ *
+ *     @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 503 Bad request
+ *     {
+ *       "code": "passWrongRegExp"
+ *     }
+ *
+ *
+ *
+ */
 router.post('/register', function (req, res, next) {
 
 
@@ -135,6 +144,33 @@ router.post('/register', function (req, res, next) {
 });
 
 
+
+
+
+/**
+ * @api {post} /login Вход в систему
+ * @apiGroup Аунтификация
+ * @apiDescription Вход в систему по паре логин и пароль.
+ * @apiParam {String} email Здесь надо передать почтовый ящик.
+ * @apiParam {String} pass Здесь надо передать пароль.
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "code": "OK",
+ *       "token": "gdfg546546gfhgfhfgh456546546"
+ *
+ *     }
+ *
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 503 Bad Request
+ *     {
+ *       "code": "PassNotFound"
+ *     }
+ *
+ *
+ *
+ *
+ */
 router.post('/login', function (req, res, next) {
 
 

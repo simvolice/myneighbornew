@@ -1,6 +1,3 @@
-/**
- * Created by simvolice on 15.01.2017 20:39.
- */
 
 
 const express = require('express');
