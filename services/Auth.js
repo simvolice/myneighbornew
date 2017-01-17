@@ -5,6 +5,9 @@ const config = require('../utils/config');
 
 const MongoClient = require('mongodb').MongoClient;
 
+const Logger = require('mongodb').Logger;
+Logger.setLevel('debug');
+
 const co = require('co');
 
 
@@ -12,14 +15,14 @@ const co = require('co');
 
 module.exports = {
 
+
     registration: function (objParams) {
 
         return co (function*() {
 
             // Connection URL
             const db = yield MongoClient.connect(config.urlToMongoDB);
-            console.log("Connected correctly to server");
-
+           
             // Get the collection
             const col = db.collection('users');
 
@@ -60,7 +63,7 @@ module.exports = {
 
             // Connection URL
             const db = yield MongoClient.connect(config.urlToMongoDB);
-            console.log("Connected correctly to server");
+            
 
             // Get the collection
             const col = db.collection('users');
@@ -115,7 +118,7 @@ module.exports = {
 
 
             const db = yield MongoClient.connect(config.urlToMongoDB);
-            console.log("Connected correctly to server");
+            
 
 
             const col = db.collection('users');
@@ -157,7 +160,7 @@ module.exports = {
 
             // Connection URL
             const db = yield MongoClient.connect(config.urlToMongoDB);
-            console.log("Connected correctly to server");
+
 
             // Get the collection
             const col = db.collection('users');
@@ -197,7 +200,7 @@ module.exports = {
 
 
             const db = yield MongoClient.connect(config.urlToMongoDB);
-            console.log("Connected correctly to server");
+            
 
 
             const col = db.collection('users');
@@ -236,7 +239,7 @@ module.exports = {
 
             // Connection URL
             const db = yield MongoClient.connect(config.urlToMongoDB);
-            console.log("Connected correctly to server");
+            
 
             // Get the collection
             const col = db.collection('users');

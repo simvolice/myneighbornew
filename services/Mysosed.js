@@ -4,6 +4,11 @@
 
 const MongoClient = require('mongodb').MongoClient;
 
+const Logger = require('mongodb').Logger;
+Logger.setLevel('debug');
+
+
+
 const co = require('co');
 const config = require('../utils/config');
 
@@ -21,7 +26,6 @@ module.exports = {
 
             // Connection URL
             const db = yield MongoClient.connect(config.urlToMongoDB);
-            console.log("Connected correctly to server");
 
             // Get the collection
             const col = db.collection('users');
@@ -64,11 +68,11 @@ module.exports = {
 
             // Connection URL
             const db = yield MongoClient.connect(config.urlToMongoDBLocalhost);
-            console.log("Connected correctly to server");
 
             // Get the collection
             const col = db.collection('primer-dataset');
             const tempCollForCoord = db.collection('tempCollForCoord');
+
 
 
 
@@ -85,10 +89,11 @@ module.exports = {
                 maxDistance: 1000,
                 distanceField: "dist.calculated"
             }
+
             },
 
                 {
-                    '$out': "tempCollForCoord"
+                    '$out': 'tempCollForCoord'
                 }
 
 
@@ -97,7 +102,12 @@ module.exports = {
 
 
 
-            ]);
+            ], function (err) {
+
+
+
+
+            });
 
 
 
