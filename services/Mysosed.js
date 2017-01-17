@@ -67,7 +67,7 @@ module.exports = {
         return co (function*() {
 
             // Connection URL
-            const db = yield MongoClient.connect(config.urlToMongoDBLocalhost);
+            const db = yield MongoClient.connect(config.urlToMongoDB);
 
             // Get the collection
             const col = db.collection('primer-dataset');
@@ -77,7 +77,7 @@ module.exports = {
 
 
 
-            //TODO Здесь надо сделать аггрегацию, с полнотекстовым поиском.
+
 
             col.aggregate([
 
@@ -105,6 +105,7 @@ module.exports = {
             ], function (err) {
 
 
+                console.log(err);
 
 
             });
@@ -114,7 +115,7 @@ module.exports = {
 
 
 
-            tempCollForCoord.createIndex({name : "text" });
+            tempCollForCoord.createIndex({name : "text" }, {default_language: 'russian'});
 
             const result = yield tempCollForCoord.aggregate([
 

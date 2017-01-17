@@ -15,14 +15,19 @@ chai.use(chaiHttp);
 
 describe('Тестируем testapi', function() {
 
-    it('Хотим увидеть свойство code', function(done) { // <= Pass in done callback
+    it('Хотим увидеть свойство result', function(done) { // <= Pass in done callback
         chai.request('http://localhost:3000')
-            .get('/testapi')
+            .get('/testgeo')
             .end(function(err, res) {
 
-                console.log(res);
 
-                expect(res).to.have.property("code");
+
+                expect(res.body).to.have.property("result");
+
+
+
+
+
                 done();                               // <= Call done to signal callback end
             });
     }) ;
