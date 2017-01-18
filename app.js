@@ -22,7 +22,6 @@ var admin = express(); // админка будущая
 
 
 
-require('./routes')(app);
 
 
 
@@ -36,6 +35,7 @@ app.use(helmet());
 
 
 
+require('./routes')(app);
 
 
 

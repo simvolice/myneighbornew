@@ -112,7 +112,7 @@ function checkRegisterData(req, res) {
 
 
 
-
+//TODO При регистрации передадутся координаты, под них необходимо создать индекс типа "2Dsphere"
 router.post('/register', function (req, res, next) {
 
 

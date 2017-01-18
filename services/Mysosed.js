@@ -84,7 +84,7 @@ module.exports = {
 
 
                 {'$geoNear': {
-                near : { type: "Point", coordinates: [ -73.961704, 40.662942 ] },
+                near : { type: "Point", coordinates:  objParams.coord  },
                 spherical: true,
                 maxDistance: 1000,
                 distanceField: "dist.calculated"
@@ -122,7 +122,7 @@ module.exports = {
 
 
                 {'$match': {
-                    '$text': {'$search' : 'Pizza' }
+                    '$text': {'$search' : objParams.search }
                 }},
 
                 {

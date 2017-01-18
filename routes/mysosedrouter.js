@@ -40,4 +40,33 @@ router.post('/editmyprofile', function (req, res, next) {
 
 
 
+router.post('/searchgeo', function(req, res, next){
+
+
+
+
+    let objParams = {
+
+        coord: req.body.coord,
+        search: req.body.search
+
+
+    };
+
+
+
+    MysosedService.searchnearcoord(objParams).then(function (result) {
+
+        res.json({"code": "ok", "result": result});
+
+    }, function (err) {
+
+        res.json(err);
+
+    });
+
+});
+
+
+
 module.exports = router;
