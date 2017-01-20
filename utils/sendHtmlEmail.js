@@ -1,11 +1,11 @@
 /**
  * Created by Admin on 13.01.2017.
  */
-
+const config = require("./config");
 var EmailTemplates = require('swig-email-templates');
 var nodemailer = require('nodemailer');
 
-var transporter = nodemailer.createTransport('smtp://support%40efflife.kz:1989aaaAAA@194.87.237.153');
+var transporter = nodemailer.createTransport(config.smtpServer);
 var path = require('path');
 
 var templates = new EmailTemplates({

@@ -13,16 +13,20 @@ var chaiHttp = require('chai-http');
 chai.use(chaiHttp);
 
 
-describe('Тестируем testapi', function() {
+describe('Тестируем /register', function() {
 
-    it('Хотим увидеть свойство result', function(done) { // <= Pass in done callback
+    it('Вернется свойство code', function(done) { // <= Pass in done callback
         chai.request('http://localhost:3000')
-            .get('/testgeo')
+            .post('/register')
+            .send({email: 'simvolice@gmail.com', pass: '1989aaaAAA@@@'})
             .end(function(err, res) {
 
 
 
-                expect(res.body).to.have.property("result");
+
+                console.log(res.body);
+
+                expect(res.body).to.have.property("code", 1);
 
 
 

@@ -21,7 +21,7 @@ module.exports = {
         return co (function*() {
 
             // Connection URL
-            const db = yield MongoClient.connect(config.urlToMongoDB);
+            const db = yield MongoClient.connect(config.urlToMongoDBLocalhost);
            
             // Get the collection
             const col = db.collection('users');
@@ -62,7 +62,7 @@ module.exports = {
 
 
             // Connection URL
-            const db = yield MongoClient.connect(config.urlToMongoDB);
+            const db = yield MongoClient.connect(config.urlToMongoDBLocalhost);
             
 
             // Get the collection
@@ -117,7 +117,7 @@ module.exports = {
 
 
 
-            const db = yield MongoClient.connect(config.urlToMongoDB);
+            const db = yield MongoClient.connect(config.urlToMongoDBLocalhost);
             
 
 
@@ -159,7 +159,7 @@ module.exports = {
 
 
             // Connection URL
-            const db = yield MongoClient.connect(config.urlToMongoDB);
+            const db = yield MongoClient.connect(config.urlToMongoDBLocalhost);
 
 
             // Get the collection
@@ -199,7 +199,7 @@ module.exports = {
 
 
 
-            const db = yield MongoClient.connect(config.urlToMongoDB);
+            const db = yield MongoClient.connect(config.urlToMongoDBLocalhost);
             
 
 
@@ -238,7 +238,7 @@ module.exports = {
 
 
             // Connection URL
-            const db = yield MongoClient.connect(config.urlToMongoDB);
+            const db = yield MongoClient.connect(config.urlToMongoDBLocalhost);
             
 
             // Get the collection
