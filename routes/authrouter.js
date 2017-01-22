@@ -65,7 +65,8 @@ function checkRegisterData(req, res) {
             url: fullUrl(req, "/verifemail"),
             subject: "Активация почтового ящика",
             from: "info@efflife.kz",
-            pathToEmailTemplate: "activateEmail.html"
+            pathToEmailTemplate: "activateEmail.html",
+            date: Date.now()
 
 
         };
