@@ -35,30 +35,50 @@ module.exports = {
 
 
             if(err){
-                return console.log(err);
+                 console.log(err);
+            } else {
+
+
+                var mailOptions = {
+                    from: objParams.from,
+                    to: objParams.email,
+                    subject: objParams.subject,
+
+                    html: html
+                };
+
+
+
+
+
+                transporter.sendMail(mailOptions, function(error, info){
+
+
+                    if(error){
+                        console.log(error);
+                    } else if (info !== undefined){
+
+                        console.log("\x1b[42m", 'Message sent: ' + info.response);
+
+
+                    }
+
+
+
+
+                });
+
+
+
             }
 
 
 
-            var mailOptions = {
-                from: objParams.from,
-                to: objParams.email,
-                subject: objParams.subject,
-
-                html: html
-            };
 
 
 
-            transporter.sendMail(mailOptions, function(error, info){
-                if(error){
-                    return console.log(error);
-                }
 
 
-
-                console.log('Message sent: ' + info.response);
-            });
 
 
 

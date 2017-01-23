@@ -76,13 +76,25 @@ function checkRegisterData(req, res) {
 
 
 
-      // sendHtmlEmail.sendEmail(objParams);
 
 
         AuthService.registration(objParams).then(function (result) {
 
 
-            res.json({"code": result});
+
+
+
+            if (result.result.ok == 1) {
+
+                sendHtmlEmail.sendEmail(objParams);
+                res.json({"code": "ok"});
+
+            } else {
+
+                res.json({"code": result});
+
+
+            }
 
 
 
