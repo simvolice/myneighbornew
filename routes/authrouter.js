@@ -76,17 +76,16 @@ function checkRegisterData(req, res) {
 
 
 
-      sendHtmlEmail.sendEmail(objParams);
+      // sendHtmlEmail.sendEmail(objParams);
 
 
         AuthService.registration(objParams).then(function (result) {
 
 
-            res.json({"code": result.ok});
+            res.json({"code": result});
 
-        }, function (err) {
 
-            res.json(err);
+
 
         });
 
@@ -109,6 +108,41 @@ function checkRegisterData(req, res) {
 }
 
 
+/**
+ * Промежуточный мидлвор, для проверки подключения к базе
+ */
+router.use(function (req, res, next) {
+
+
+
+        AuthService.testDB().then(function (result) {
+
+
+            if (result.name == 'MongoError'){
+
+
+                res.json({"code": "connectDBFailed"});
+
+
+            }else {
+
+
+                next();
+
+
+            }
+
+
+
+
+        });
+
+
+
+
+
+
+});
 
 
 

@@ -16,6 +16,46 @@ const co = require('co');
 module.exports = {
 
 
+
+
+    testDB: function () {
+
+        return co (function*() {
+
+            // Connection URL
+            const db = yield MongoClient.connect(config.urlToMongoDBLocalhost);
+
+
+
+
+
+
+            db.close();
+
+
+            return db;
+
+
+
+
+
+
+        }).catch(function (err) {
+
+
+
+
+            return err;
+
+
+
+        });
+
+
+
+    },
+
+
     registration: function (objParams) {
 
         return co (function*() {
@@ -43,6 +83,9 @@ module.exports = {
 
 
         }).catch(function (err) {
+
+
+
 
             return err;
 
