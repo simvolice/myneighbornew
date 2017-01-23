@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 
-router.get('/testgeo', function (req, res, next) {
+router.post('/testgeo', function (req, res, next) {
 
 
 

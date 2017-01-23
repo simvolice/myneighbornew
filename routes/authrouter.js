@@ -157,6 +157,43 @@ router.use(function (req, res, next) {
 });
 
 
+/**
+ * Для отражения CSRF атак.
+ */
+
+let tokencsrf = null;
+
+router.get('/getcsrftoken', function(req, res, next){
+    tokencsrf = uuidV4();
+    res.json({"tokencsrf": tokencsrf});
+
+});
+
+router.use(function (req, res, next) {
+
+
+    if (tokencsrf == req.body.tokencsrf) {
+
+
+        next();
+
+    }else {
+
+
+        res.json({"code": "noCsrfToken"});
+
+    }
+
+
+
+
+
+});
+
+
+
+
+
 
 //TODO При регистрации передадутся координаты, под них необходимо создать индекс типа "2Dsphere"
 router.post('/register', function (req, res, next) {
