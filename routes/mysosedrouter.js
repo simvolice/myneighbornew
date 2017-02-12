@@ -22,12 +22,8 @@ router.post('/editmyprofile', function (req, res, next) {
 
     MysosedService.editmyprofile(objParams).then(function (result) {
 
-        res.json({"code" : result.lastErrorObject.updatedExisting});
+        res.json({"code" : "ok"});
 
-
-    }, function (err) {
-
-        res.json(err);
 
     });
 
@@ -58,10 +54,6 @@ router.post('/searchgeo', function(req, res, next){
     MysosedService.searchnearcoord(objParams).then(function (result) {
 
         res.json({"code": "ok", "result": result});
-
-    }, function (err) {
-
-        res.json(err);
 
     });
 
