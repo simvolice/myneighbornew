@@ -160,8 +160,13 @@ router.use(function (req, res, next) {
 /**
  * Для отражения CSRF атак.
  */
-
 let tokencsrf = Math.random();
+router.get('/getcsrftoken', function(req, res, next){
+    tokencsrf = uuidV4();
+    res.json({"tokencsrf": tokencsrf});
+
+});
+
 router.use(function (req, res, next) {
 
 
@@ -263,11 +268,6 @@ router.post('/login', function (req, res, next) {
 
 
 
-        }, function (err) {
-
-
-            res.json(err.stack);
-
         });
 
     }
@@ -283,6 +283,11 @@ router.post('/login', function (req, res, next) {
 
 });
 
+
+
+
+
+
 router.get('/verifemail', function (req, res, next) {
 
 
@@ -292,13 +297,7 @@ router.get('/verifemail', function (req, res, next) {
 
 
 
-        res.json({"code": result.lastErrorObject.updatedExisting});
-
-
-    }, function (err) {
-
-
-        res.json(err);
+        res.redirect('/login');
 
     });
 
@@ -342,7 +341,7 @@ router.post('/resetpass', function (req, res, next) {
         AuthService.resetPassFindUser(req.body.email).then(function (result) {
             const objParams = {
 
-                email: req.body.email,
+                email: result.email,
 
                 url : fullUrl(req, "/veriftoken", token = result.activateToken),
                 subject: "Восстановление пароля",
@@ -359,11 +358,6 @@ router.post('/resetpass', function (req, res, next) {
 
 
             res.json({"code": "ok"})
-
-
-        }, function (err) {
-
-            res.json(err);
 
 
         });
@@ -396,15 +390,10 @@ router.get('/veriftoken', function (req, res, next) {
 
     AuthService.verifToken(req.query.token).then(function (result) {
 
-        res.json({"activateToken": result.activateToken});
+        res.redirect('/setnewpasspage');
 
 
-    }, function (err) {
-
-        res.json(err);
-
-
-    })
+    });
 
 
 
@@ -428,22 +417,17 @@ router.post('/setnewpass', function(req, res, next){
 
         let objParams = {
 
-            token: req.body.token,
+
             pass: bcrypt.hashSync(req.body.pass, 10)
 
         };
 
         AuthService.setNewPassword(objParams).then(function (result) {
 
-            res.json({"code": result.lastErrorObject.updatedExisting});
+            res.json({"code": "ok"});
 
 
-        }, function (err) {
-
-            res.json(err);
-
-
-        })
+        });
 
 
     }
