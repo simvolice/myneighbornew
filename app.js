@@ -17,8 +17,6 @@ var helmet = require('helmet');
 
 
 var app = express();
-var admin = express(); // админка будущая
-
 
 
 
@@ -29,7 +27,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), {"maxAge": "1y"}));
 app.use(helmet());
 
 

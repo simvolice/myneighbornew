@@ -161,14 +161,7 @@ router.use(function (req, res, next) {
  * Для отражения CSRF атак.
  */
 
-let tokencsrf = null;
-
-router.get('/getcsrftoken', function(req, res, next){
-    tokencsrf = uuidV4();
-    res.json({"tokencsrf": tokencsrf});
-
-});
-
+let tokencsrf = Math.random();
 router.use(function (req, res, next) {
 
 
